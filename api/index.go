@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"vsign/applestore"
 	"vsign/config"
 	"vsign/logger"
 )
@@ -35,7 +36,14 @@ func init() {
 
 		// 中间件
 
-		// 路由
+		// 生成jwt token
+		applestore.HandleJwt(s)
+
+		// *************************************appstore connect api***************************************
+
+		HandleAppStoreApi(s)
+
+		// *************************************fastlane***************************************
 
 		logger.Info("vsign api server started and listening on port %d", config.Port)
 		s.Run(":" + strconv.Itoa(config.Port))
